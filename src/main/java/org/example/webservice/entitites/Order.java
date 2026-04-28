@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.example.webservice.entitites.enums.OrderStatus;
 
 @Entity
 @Table(name = "tb_order")
@@ -41,12 +42,25 @@ public class Order implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Integer status;
+
+
+    public OrderStatus getStatus() {
+        return OrderStatus.valueOf(status);
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status.getValue();
+    }
+
     public Order() {
     }
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, OrderStatus status, User client) {
         this.id = id;
         this.moment = moment;
+        this.status = status.getValue();
         this.client = client;
+
     }
 
     @Override
