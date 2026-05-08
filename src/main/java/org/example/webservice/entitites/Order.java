@@ -26,21 +26,10 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
-    public Instant getMoment() {
-        return moment;
-    }
-
-    public void setMoment(Instant moment) {
-        this.moment = moment;
-    }
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private User client;
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     private Integer status;
 
@@ -94,11 +83,12 @@ public class Order implements Serializable {
     }
 
 
-
-
-    public List<User> getCliente() {
-        return cliente;
+    public Instant getMoment() {
+        return moment;
     }
 
-    private List<User> cliente = new ArrayList<>();
+    public void setMoment(Instant moment) {
+        this.moment = moment;
+    }
+
 }

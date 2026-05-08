@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -22,6 +23,10 @@ public class Product implements Serializable {
     private Double price;
     private String imgURL;
 
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn( name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
 
     private Set<Category> categories = new HashSet<>();
 
@@ -81,14 +86,14 @@ public class Product implements Serializable {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Product product = (Product) o;
-        return getId().equals(product.getId());
+        return Objects.equals(id, product.id);
     }
 
     @Override
     public int hashCode() {
-        return getId().hashCode();
+        return Objects.hash(id); // Não quebra mesmo se o ID for nulo
     }
 }

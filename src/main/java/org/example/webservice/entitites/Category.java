@@ -1,5 +1,6 @@
 package org.example.webservice.entitites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -21,8 +22,8 @@ public class Category  implements Serializable {
     private Long id;
     private String name;
 
-
-
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
 
@@ -36,16 +37,18 @@ public class Category  implements Serializable {
     public Set<Product> getProducts() {
         return products;
     }
+
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return getId() == category.getId() && Objects.equals(getName(), category.getName());
+        return Objects.equals(id, category.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName());
+        return Objects.hash(id); // Não quebra mesmo se o ID for nulo
     }
 
     public long getId() {
