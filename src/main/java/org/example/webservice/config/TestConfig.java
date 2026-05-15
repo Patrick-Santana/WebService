@@ -1,10 +1,7 @@
 package org.example.webservice.config;
 
 
-import org.example.webservice.entitites.Category;
-import org.example.webservice.entitites.Order;
-import org.example.webservice.entitites.Product;
-import org.example.webservice.entitites.User;
+import org.example.webservice.entitites.*;
 import org.example.webservice.entitites.enums.OrderStatus;
 import org.example.webservice.repositories.CategoryRepository;
 import org.example.webservice.repositories.OrderRepository;
@@ -69,6 +66,12 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1,u2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3,o4));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        t
+
         orderService.saveAll(Arrays.asList(cat1,cat2,cat3));
         categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4));

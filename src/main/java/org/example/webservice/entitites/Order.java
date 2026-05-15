@@ -7,9 +7,8 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.webservice.entitites.enums.OrderStatus;
 
@@ -30,6 +29,9 @@ public class Order implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> Items = new HashSet<>();
 
     private Integer status;
 
@@ -52,6 +54,28 @@ public class Order implements Serializable {
 
     }
 
+   public Set<OrderItem> getItems() {
+        return Items;
+   }
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
+    public Instant getMoment() {
+        return moment;
+    }
+
+    public void setMoment(Instant moment) {
+        this.moment = moment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -70,25 +94,6 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
-    }
-
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
-    public Instant getMoment() {
-        return moment;
-    }
-
-    public void setMoment(Instant moment) {
-        this.moment = moment;
     }
 
 }
