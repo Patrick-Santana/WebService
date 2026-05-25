@@ -1,5 +1,6 @@
 package org.example.webservice.entitites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -27,8 +28,10 @@ public class Product implements Serializable {
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn( name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -72,6 +75,15 @@ public class Product implements Serializable {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> orders = new HashSet<>();
+        for (OrderItem orderItem : orderItems) {
+            orders.add(orderItem.getOrder());
+        }
+        return orders;
     }
 
     public Product() {}

@@ -1,19 +1,22 @@
 package org.example.webservice.entitites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.example.webservice.entitites.pk.OrderItemPK;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_item")
-public class OrderItem {
+public class OrderItem implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id =new OrderItemPK();
 
     private Double price;
     private Integer quantity;
@@ -29,13 +32,16 @@ public class OrderItem {
     }
 
     // Meu Id de Product e order não são chamados pelo OrdemItemPK, teem-se que fazer uma instância
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
     public void setOrder(Order order) {
         id.setOrder(order);
     }
+
     //product
+    //
     public Product getProduct() {
         return id.getProduct();
     }

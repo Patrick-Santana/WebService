@@ -3,10 +3,7 @@ package org.example.webservice.config;
 
 import org.example.webservice.entitites.*;
 import org.example.webservice.entitites.enums.OrderStatus;
-import org.example.webservice.repositories.CategoryRepository;
-import org.example.webservice.repositories.OrderRepository;
-import org.example.webservice.repositories.ProductRepository;
-import org.example.webservice.repositories.UserRepository;
+import org.example.webservice.repositories.*;
 import org.example.webservice.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -70,7 +70,6 @@ public class TestConfig implements CommandLineRunner {
         OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
         OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
         OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
-        t
 
         orderService.saveAll(Arrays.asList(cat1,cat2,cat3));
         categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
@@ -83,5 +82,6 @@ public class TestConfig implements CommandLineRunner {
         p5.getCategories().add(cat2);
 
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
     }
 }
