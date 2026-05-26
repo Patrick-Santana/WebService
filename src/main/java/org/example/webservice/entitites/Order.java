@@ -15,12 +15,9 @@ import org.example.webservice.entitites.enums.OrderStatus;
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
@@ -30,12 +27,24 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
+
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> Items = new HashSet<>();
 
     private Integer status;
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
+    public Order() {
+    }
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
     public OrderStatus getStatus() {
         return OrderStatus.valueOf(status);
     }
@@ -44,8 +53,6 @@ public class Order implements Serializable {
         this.status = status.getValue();
     }
 
-    public Order() {
-    }
     public Order(Long id, Instant moment, OrderStatus status, User client) {
         this.id = id;
         this.moment = moment;

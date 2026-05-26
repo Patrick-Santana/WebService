@@ -13,8 +13,8 @@ import java.util.Objects;
 
 @Setter
 @Getter
-@Entity
 
+@Entity
 @Table(name = "tb_user")
 public class User implements Serializable {
 
