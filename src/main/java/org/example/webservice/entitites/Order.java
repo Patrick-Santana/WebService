@@ -45,6 +45,7 @@ public class Order implements Serializable {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
     public OrderStatus getStatus() {
         return OrderStatus.valueOf(status);
     }
@@ -74,6 +75,13 @@ public class Order implements Serializable {
         this.id = id;
     }
 
+    public Double getTotal() {
+        double sum =0.0;
+        for (OrderItem item : Items) {
+            sum += item.getSubTotal();
+        }
+        return sum;
+    }
 
     public Instant getMoment() {
         return moment;
